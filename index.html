@@ -109,14 +109,9 @@ body{
   -webkit-backdrop-filter: blur(6px);
   z-index: 60;
   display: none;
-
-  /* ✅ 手機：全螢幕條款更自然，不會卡在中間 */
   align-items: stretch;
   justify-content: center;
   padding: 0;
-
-  /* ✅ 避免 iOS 背景橡皮筋 */
-  overscroll-behavior: contain;
 }
     .modal{
   width: 100%;
@@ -126,8 +121,6 @@ body{
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  /* ✅ 手機：直接滿版高度（含動態視窗） */
   height: 100dvh;
   max-height: 100dvh;
   border-radius: 0;
@@ -146,38 +139,44 @@ body{
     border-radius: 1.75rem;
   }
 }
-    .modal-body{
-  /* ✅ 讓內容區可捲，且不會把底部按鈕擠出畫面 */
+.modal-body{
   flex: 1;
   min-height: 0;
-  overflow: auto;
-
+  overflow-y: auto;
+  overflow-x: hidden;
   background: var(--bg);
   padding: 1.25rem;
-
-  /* ✅ iOS 捲動手感 */
   -webkit-overflow-scrolling: touch;
-
-  /* ✅ 避免內層捲動時把整頁帶動 */
-  overscroll-behavior: contain;
 }
-    .fullscreen-signature{
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: var(--bg);
-      display: none !important;
-      flex-direction: column;
-      touch-action: none;
-      overscroll-behavior: contain;
-      width: 100%;
-      height: 100dvh;
-      max-height: 100dvh;
-      overflow: hidden;
-    }
-    .fullscreen-signature.is-visible{
-      display: flex !important;
-    }
+.fullscreen-signature{
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--bg);
+  display: none !important;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.fullscreen-signature.is-visible{
+  display: flex !important;
+}
+@media (max-width: 768px){
+  .fullscreen-signature.is-visible{
+    display: flex !important;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
     /* ✅ 花沐：粉霧玫瑰 CTA（柔和、乾淨、不要粉→綠跳色） */
 .submit-cta{
   background: linear-gradient(90deg, #A4BEB3 0%, #8CA69C 45%, #738E83 100%);
@@ -270,6 +269,22 @@ body{
   border-radius: 1rem;
   border: 2px solid rgba(155,122,94,.20);
   overflow: hidden;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+.sig-fs-canvasWrap canvas{
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  touch-action: none;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* 底部按鈕固定在底部 + safe-area */
@@ -289,12 +304,11 @@ body{
   position: fixed;
   inset: 0;
   z-index: 9999;
-  display: none;            /* ✅ 用 display 控制 */
+  display: none;
   background: rgba(0,0,0,.35);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
-  /* ✅ 置中（手機/桌機都置中） */
   align-items: center;
   justify-content: center;
 
@@ -302,8 +316,6 @@ body{
   padding-right: 1rem;
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
   padding-top: max(1rem, env(safe-area-inset-top));
-
-  overscroll-behavior: contain;
 }
 
 #petSelectModal .pet-modal{
@@ -315,13 +327,11 @@ body{
   box-shadow: 0 22px 60px rgba(0,0,0,.18);
   overflow: hidden;
 
-  /* 手機 bottom-sheet 高度限制 */
   max-height: min(78dvh, 720px);
   display: flex;
   flex-direction: column;
 }
 
-/* 桌機：置中顯示 */
 @media (min-width: 768px){
   #petSelectModal .pet-modal{
     border-radius: 1.75rem;
@@ -332,7 +342,8 @@ body{
 #petSelectModal .pet-modal-body{
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   background: var(--bg);
 }
@@ -413,6 +424,13 @@ body{
    =============================== */
 html{
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* iOS 輸入不放大 / 增加點擊舒適度 */
@@ -421,50 +439,27 @@ html{
     background-attachment: scroll;
   }
 
-  /* 卡片圓角稍微收斂，視覺更緊湊 */
   .glass-card{ border-radius: 1.4rem; }
   .cute-card{ border-radius: 1.2rem; }
-
-  /* Modal / 表單區 */
   .modal{ height: 100dvh; }
   .modal-body{ padding: 1rem; }
 
-  /* 可點區域最小高度 */
   button, a{
     min-height: 44px;
   }
 
-  /* 防止 iOS 點輸入框自動放大 */
   input, select, textarea, button{
     font-size: 16px;
   }
 
-  /* 捲動定位更舒服 */
   input, select, textarea{
     scroll-margin-top: 90px;
   }
 
-  /* 主要送出按鈕更好按 */
   .submit-cta{
     padding-top: 18px;
     padding-bottom: 18px;
   }
-}
-/* ✅ 防止手機左右滑動（更像 APP） */
-html{
-  overflow-x: hidden !important;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  height: 100%;
-}
-body{
-  overflow-x: hidden !important;
-  overflow-y: auto;
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
-  position: relative;
 }
   </style>
 </head>
@@ -690,7 +685,9 @@ body{
 
         <button type="button" id="searchBtn"
                 onclick="searchOldCustomer()"
-                class="shrink-0 px-4 rounded-2xl bg-hanamu-green text-white font-black shadow-lg shadow-hanamu-green/20 active:scale-[0.98] transition flex flex-col items-center justify-center min-w-[92px]">
+                class="shrink-0 px-4 rounded-2xl bg-hanamu-green text-white font-black shadow-lg shadow-hanamu-green/20 active:scale-[0.98] transition flex flex-col items-center justify-center min-w-[92px]"
+                style="touch-action:manipulation;"
+                onmousedown="if(document.activeElement) document.activeElement.blur();">
           <i data-lucide="search" class="w-5 h-5"></i>
           <span class="text-[10px] mt-1">搜尋舊客</span>
         </button>
@@ -1274,7 +1271,9 @@ body{
 
         <button type="submit" id="submitBtn"
         class="submit-cta w-full py-5 font-black text-lg text-white transition
-               disabled:opacity-50 disabled:cursor-not-allowed">
+               disabled:opacity-50 disabled:cursor-not-allowed"
+        style="touch-action:manipulation;"
+        onclick="if(this.disabled) return false;">
   <span class="relative z-10 flex items-center justify-center gap-3 tracking-wide">
     <i id="submitIconSend" data-lucide="send" class="w-5 h-5"></i>
     <i id="submitIconLoading" data-lucide="loader" class="w-5 h-5 hidden animate-spin"></i>
@@ -1360,7 +1359,7 @@ body{
       <button type="button" id="closeTermsBtn" class="px-3 py-1 rounded-full bg-white/15 font-black">關閉</button>
     </div>
 
-<div id="termsBody" class="modal-body text-[13px] leading-relaxed space-y-4">
+<div id="termsBody" class="modal-body text-[13px] leading-relaxed space-y-4" style="-webkit-overflow-scrolling:touch;">
 
   <!-- 標題卡 -->
   <div class="bg-white rounded-2xl border border-hanamu-green/20 p-4">
@@ -1396,11 +1395,11 @@ body{
       本人已確認預計接回時間與服務金額無誤，並同意上述條款。
     </div>
   </div>
-</div>
 
-<!-- 底部引導文字（僅在 Modal 內顯示） -->
-<div class="text-center text-[11px] font-black text-gray-400 pt-2 pb-1">
-  ⬇️ 請繼續滑動閱讀完整條款
+  <!-- 底部引導文字（僅在 Modal 內顯示） -->
+  <div class="text-center text-[11px] font-black text-gray-400 pt-2 pb-1">
+    ⬇️ 請繼續滑動閱讀完整條款
+  </div>
 </div>
 
 <!-- 同意按鈕區（固定在 Modal 底部） -->
@@ -1415,30 +1414,32 @@ body{
 
 
 <!-- ====== 全螢幕簽名（修正版：底部按鈕永遠可見 + 右上角 X） ====== -->
-<div id="sigFullscreen" class="fullscreen-signature">
+<div id="sigFullscreen" class="fullscreen-signature" style="user-select:none;-webkit-user-select:none;">
   <div class="sig-fs-top px-5 py-4 bg-hanamu-green text-white flex items-center justify-between shadow-sm">
     <div class="font-black">請簽名</div>
 
-    <!-- 右上角 X -->
     <button type="button" id="closeSigFsBtn"
-            class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 transition flex items-center justify-center">
+            class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 transition flex items-center justify-center"
+            style="touch-action:manipulation;">
       <i data-lucide="x" class="w-5 h-5"></i>
     </button>
   </div>
 
   <div class="sig-fs-body" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:0.75rem;">
     <div class="sig-fs-canvasWrap" style="flex:1;min-height:200px;background:#ffffff;border-radius:1rem;border:2px solid rgba(155,122,94,0.20);overflow:hidden;">
-      <canvas id="sigCanvas" style="width:100%;height:100%;display:block;touch-action:none;"></canvas>
+      <canvas id="sigCanvas" style="width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;"></canvas>
     </div>
   </div>
 
-  <div class="sig-fs-actions flex gap-3">
+  <div class="sig-fs-actions flex gap-3" style="touch-action:manipulation;">
     <button type="button" id="sigClearFsBtn"
-            class="flex-1 py-3 rounded-xl font-black bg-gray-100 text-gray-600">
+            class="flex-1 py-3 rounded-xl font-black bg-gray-100 text-gray-600"
+            style="touch-action:manipulation;">
       重寫
     </button>
     <button type="button" id="sigConfirmFsBtn"
-            class="flex-[2] py-3 rounded-xl font-black bg-hanamu-green text-white shadow-lg shadow-hanamu-green/20">
+            class="flex-[2] py-3 rounded-xl font-black bg-hanamu-green text-white shadow-lg shadow-hanamu-green/20"
+            style="touch-action:manipulation;">
       確認簽名
     </button>
   </div>
@@ -2122,6 +2123,7 @@ function lockPageScroll(){
   document.body.style.right = "0";
   document.body.style.width = "100%";
   document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
 }
 
 function unlockPageScroll(){
@@ -2131,6 +2133,7 @@ function unlockPageScroll(){
   document.body.style.right = "";
   document.body.style.width = "";
   document.body.style.overflow = "";
+  document.documentElement.style.overflow = "";
   // 確保在解鎖時，能正確回到鎖定前的位置
   window.scrollTo({
     top: __scrollY,
@@ -2178,19 +2181,24 @@ function unlockPageScroll(){
       return;
     }
 
-    // ✅ 使用 class 控制顯示（避免 inline style 被覆蓋）
+    // ✅ 使用 class 控制顯示（統一方式，避免衝突）
     sigFullscreen.classList.add("is-visible");
-    sigFullscreen.style.display = "flex";
+    // ✅ 移除重複的 style.display 設定，由 CSS 控制
+    // sigFullscreen.style.display = "flex";  ← 移除這行，避免與 class 衝突
 
     // ✅ 鎖定頁面滾動
     lockPageScroll();
+
+    // ✅ 強制阻止 body 滾動穿透
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
 
     // ✅ 多次嘗試初始化 canvas（確保 DOM 已就緒）
     const initCanvas = (attempt = 0) => {
       const canvas = document.getElementById("sigCanvas");
       if (!canvas) {
-        if (attempt < 5) {
-          setTimeout(() => initCanvas(attempt + 1), 200);
+        if (attempt < 10) {
+          setTimeout(() => initCanvas(attempt + 1), 150);
         }
         return;
       }
@@ -2198,43 +2206,70 @@ function unlockPageScroll(){
       // 取得父容器尺寸
       const wrap = canvas.parentElement;
       if (!wrap) {
-        if (attempt < 5) {
-          setTimeout(() => initCanvas(attempt + 1), 200);
+        if (attempt < 10) {
+          setTimeout(() => initCanvas(attempt + 1), 150);
         }
         return;
       }
 
+      // 強制重新計算佈局
+      wrap.style.display = 'flex';
+      wrap.style.flex = '1';
+      wrap.style.minHeight = '200px';
+      wrap.style.touchAction = 'none';
+      wrap.style.overflow = 'hidden';
+
+      // 使用 getBoundingClientRect 獲取準確尺寸
       const rect = wrap.getBoundingClientRect();
+      let width = rect.width || wrap.offsetWidth || window.innerWidth - 24;
+      let height = rect.height || wrap.offsetHeight || (window.innerHeight - 200);
+
       // 確保尺寸大於 0
-      if (rect.width < 10 || rect.height < 10) {
-        if (attempt < 5) {
-          setTimeout(() => initCanvas(attempt + 1), 200);
+      if (width < 50 || height < 50) {
+        if (attempt < 10) {
+          setTimeout(() => initCanvas(attempt + 1), 150);
         }
         return;
       }
 
       const dpr = window.devicePixelRatio || 1;
 
-      // 設定 canvas 尺寸
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
+      // 設定 canvas 尺寸（保留一些 padding 讓筆跡不會被切到）
+      const padding = 4;
+      const canvasWidth = width - padding * 2;
+      const canvasHeight = height - padding * 2;
+
+      canvas.width = canvasWidth * dpr;
+      canvas.height = canvasHeight * dpr;
+      canvas.style.width = canvasWidth + "px";
+      canvas.style.height = canvasHeight + "px";
+      canvas.style.display = "block";
+      canvas.style.touchAction = "none";
+      canvas.style.cursor = "pointer";
+      canvas.style.margin = "0 auto";
+      canvas.style.position = "relative";
+      canvas.style.top = padding + "px";
 
       const ctx = canvas.getContext("2d");
       ctx.scale(dpr, dpr);
 
       // 清除舊實例
       if (signaturePad) {
-        try { signaturePad.off(); } catch(e) {}
-        signaturePad = null;
+        try { 
+          signaturePad.off(); 
+          signaturePad = null;
+        } catch(e) {}
       }
 
+      // 創建新的 SignaturePad 實例
       signaturePad = new SignaturePad(canvas, {
         minWidth: 2,
         maxWidth: 4,
         penColor: "#2C3531",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        throttle: 0,
+        minDistance: 1,
+        dotSize: 2
       });
 
       // 載入舊簽名
@@ -2246,21 +2281,75 @@ function unlockPageScroll(){
         }
       }
 
+      // 重新調整尺寸（確保 responsive）
+      const resizeCanvas = () => {
+        if (!signaturePad) return;
+        try {
+          const newRect = wrap.getBoundingClientRect();
+          if (newRect.width > 50 && newRect.height > 50) {
+            signaturePad.resizeCanvas();
+          }
+        } catch(e) {}
+      };
+
+      // 監聽視窗變化
+      const resizeHandler = () => {
+        setTimeout(resizeCanvas, 100);
+      };
+      window.addEventListener('resize', resizeHandler);
+
+      // 儲存 handler 以便清理
+      canvas._resizeHandler = resizeHandler;
+
       if (window.lucide) window.lucide.createIcons();
+
+      // ✅ 強制觸發一次 resize 確保尺寸正確
+      setTimeout(resizeCanvas, 200);
     };
 
-    // 延遲初始化
-    setTimeout(() => initCanvas(0), 150);
-    // 再次嘗試（確保尺寸正確）
-    setTimeout(() => initCanvas(0), 400);
-    // 第三次嘗試（手機可能更慢）
-    setTimeout(() => initCanvas(0), 700);
+    // 使用多階段延遲初始化，確保 DOM 完全渲染
+    const initStages = [50, 150, 350, 600];
+    initStages.forEach((delay, index) => {
+      setTimeout(() => {
+        // 如果 signaturePad 已經成功初始化，就不再重複
+        if (signaturePad && signaturePad.canvas) {
+          return;
+        }
+        initCanvas(index);
+      }, delay);
+    });
+
+    // 最後一次備用初始化
+    setTimeout(() => {
+      if (!signaturePad || !signaturePad.canvas) {
+        initCanvas(10);
+      }
+    }, 1000);
   }
 
   function closeSigFullscreen(){
     sigFullscreen.classList.remove("is-visible");
-    sigFullscreen.style.display = "none";
+    // ✅ 移除重複的 style.display 設定，由 CSS 控制
+    // sigFullscreen.style.display = "none";  ← 移除這行，避免與 class 衝突
+    
+    // ✅ 恢復 body 滾動
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
     unlockPageScroll();
+
+    // ✅ 清理簽名板實例，避免記憶體洩漏
+    if (signaturePad) {
+      try {
+        signaturePad.off();
+        // 清理 canvas 上的事件監聽
+        const canvas = document.getElementById("sigCanvas");
+        if (canvas && canvas._resizeHandler) {
+          window.removeEventListener('resize', canvas._resizeHandler);
+          delete canvas._resizeHandler;
+        }
+        signaturePad = null;
+      } catch(e) {}
+    }
   }
 
   openSigBtn.addEventListener("click", openSigFullscreen);
@@ -2733,32 +2822,34 @@ location.hash = "#success";
 }
 </script>
 <!-- ✅ 舊客搜尋：寵物選擇彈窗（像宿洗：手機貼底、桌機置中） -->
-<div id="petSelectModal" aria-hidden="true">
-  <div class="pet-modal">
+<div id="petSelectModal" aria-hidden="true" style="display:none;">
+  <div class="pet-modal" style="-webkit-overflow-scrolling:touch;">
     <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
       <div>
         <div class="font-black text-hanamu-dark">搜尋到舊客紀錄</div>
         <div class="text-[11px] font-bold text-gray-400 mt-0.5">請選擇要帶入的毛孩資料</div>
       </div>
       <button type="button" id="petModalCloseBtn"
-              class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 font-black flex items-center justify-center">
+              class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 font-black flex items-center justify-center"
+              style="touch-action:manipulation;">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
 
-    <div class="pet-modal-body p-5">
-      <div id="petListContainer" class="space-y-3 max-h-[55vh] overflow-auto pr-1"></div>
+    <div class="pet-modal-body p-5" style="-webkit-overflow-scrolling:touch;">
+      <div id="petListContainer" class="space-y-3 max-h-[55vh] overflow-auto pr-1" style="-webkit-overflow-scrolling:touch;"></div>
 
       <button type="button" id="petModalKeepBtn"
-              class="mt-4 w-full py-3 rounded-2xl border-2 border-gray-200 font-black text-gray-600 hover:bg-gray-50 transition">
+              class="mt-4 w-full py-3 rounded-2xl border-2 border-gray-200 font-black text-gray-600 hover:bg-gray-50 transition"
+              style="touch-action:manipulation;">
         不使用舊資料，繼續填寫
       </button>
     </div>
   </div>
 </div>
 <!-- ✅ Toast：浮動提示（showMsg 會用這個） -->
-<div id="toast">
-  <div id="toastCard" class="toast-card toast-ok">
+<div id="toast" style="position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:99999;width:calc(100% - 24px);max-width:520px;display:none;pointer-events:none;">
+  <div id="toastCard" class="toast-card toast-ok" style="pointer-events:auto;">
     <span id="toastText"></span>
     <span id="toastSub" class="toast-sub"></span>
   </div>
@@ -2784,7 +2875,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=10", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=2", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
