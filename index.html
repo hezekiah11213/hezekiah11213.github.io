@@ -46,6 +46,7 @@ colors: {
   </script>
 
   <style>
+    
 :root{
   --bg: #F9F6F0; /* 米白色 */
   --text: #2C3531;
@@ -461,6 +462,75 @@ body {
     padding-bottom: 18px;
   }
 }
+  /* ===============================
+   🌟 Mobile Form & UI Beautification (手機端表單與排版極致美化)
+   =============================== */
+
+/* 1. 統一並美化所有輸入框與下拉選單 */
+.input-field,
+input[type="text"], input[type="number"], input[type="tel"], input[type="date"], select, textarea {
+  width: 100%;
+  background-color: #fcfcfc; /* 極淺的灰白底，與純白卡片區分 */
+  border: 1.5px solid #e5e7eb; /* 乾淨柔和的邊框 */
+  border-radius: 0.75rem; /* 現代感圓角 (12px) */
+  padding: 0.875rem 1rem; /* 加大內距，提升手指點擊與閱讀舒適度 */
+  font-size: 16px !important; /* 絕對防止 iOS 點擊輸入框時畫面亂放大 */
+  color: #374151;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.01); /* 微弱內陰影增加立體感 */
+}
+
+/* 2. 聚焦時的質感發光效果 (取代預設死板的黑框) */
+.input-field:focus,
+input:focus, select:focus, textarea:focus {
+  background-color: #ffffff;
+  border-color: #6f8c74; /* 主題綠色 */
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(111, 140, 116, 0.15); /* 柔和的 Focus Ring */
+}
+
+/* 3. 美化 Select 下拉選單 (覆蓋掉醜陋的原生箭頭) */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
+}
+
+/* 4. 優化標籤 (Label) - 建立明確的視覺層級與呼吸空間 */
+label, .form-label {
+  display: inline-block;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 600;
+  color: #6b7280; /* 柔和的深灰色，不搶輸入框焦點 */
+  margin-bottom: 0.5rem; /* 與下方輸入框拉開呼吸空間 */
+  letter-spacing: 0.025em;
+}
+
+/* 5. 卡片內的表單間距拉開，避免全部擠在一起 */
+.cute-card form > div,
+.glass-card form > div,
+.space-y-4 > * + * {
+  margin-top: 1.25rem;
+}
+
+/* 6. 美化選項清單 (如舊客毛孩選擇列表) */
+.pet-list-item {
+  border: 1.5px solid #f3f4f6;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.2s;
+  background: #ffffff;
+  margin-bottom: 0.75rem;
+}
+.pet-list-item:active {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: scale(0.98);
+}
   </style>
 </head>
 
@@ -717,7 +787,7 @@ body {
 
     <div class="md:col-span-2">
       <label class="text-sm font-black text-hanamu-wood">平時就診動物醫院</label>
-      <input name="hospital" class="mt-2 w-full cute-input px-4 py-3" placeholder="請填寫平時就診醫院（若無則填寫「無」）" />
+      <input name="hospital" class="mt-2 w-full cute-input px-4 py-3" placeholder="（若無則填寫「無」）" />
     </div>
   </div>
 </section>
@@ -789,9 +859,16 @@ body {
         </select>
 <input name="pet_chip" id="petChip"
        class="w-full cute-input px-4 py-3"
-       placeholder="請輸入晶片號碼（最多15碼）或外型特徵"
+       placeholder="請輸入晶片號碼（最多15碼）"
        inputmode="text"
        maxlength="30" />
+      </div>
+      <div id="petAppearanceWrap" class="hidden mt-2">
+        <input name="pet_appearance" id="petAppearance"
+               class="w-full cute-input px-4 py-3"
+               placeholder="請輸入外型特徵（例如：黑白相間、左耳缺角、體型偏小）"
+               maxlength="100"
+               disabled />
       </div>
       <div class="text-[11px] font-bold text-gray-500 mt-2">有晶片時請填 10 或 15 碼數字；無晶片請填寫外型特徵</div>
     </div>
@@ -1411,7 +1488,8 @@ body {
     請閱讀完畢
   </button>
 </div>
-
+  </div>
+</div>
 
 <!-- ====== 全螢幕簽名（修正版：底部按鈕永遠可見 + 右上角 X） ====== -->
 <div id="sigFullscreen" class="fullscreen-signature" style="user-select:none;-webkit-user-select:none;">
@@ -1631,7 +1709,7 @@ function fillFormWithPayload(p){
 
     // 寵物
     "pet_name","pet_breed","pet_color","pet_age",
-    "chip_status","pet_chip",
+    "chip_status","pet_chip","pet_appearance",
     "pet_sex","is_neutered","is_friendly","is_dog_friendly","is_aggressive",
     "has_history","history_notes"
   ]);
@@ -2019,7 +2097,9 @@ function ownerIdUppercaseFirst(input){
 function toggleChipInput(){
   const sel = document.getElementById("chipStatus");
   const input = document.getElementById("petChip");
-  if(!sel || !input) return;
+  const appearanceWrap = document.getElementById("petAppearanceWrap");
+  const appearance = document.getElementById("petAppearance");
+  if(!sel || !input || !appearanceWrap || !appearance) return;
 
   const v = sel.value;
 
@@ -2029,17 +2109,31 @@ function toggleChipInput(){
     input.required = false;                 // ✅ 無晶片不必填
     input.placeholder = "無晶片免填";
     input.classList.add("opacity-50");
+
+    appearanceWrap.classList.remove("hidden");  // ✅ 無晶片 → 顯示外型特徵欄位
+    appearance.disabled = false;
+    appearance.required = true;                 // ✅ 無晶片時外型特徵必填
   }else if(v === "unknown"){
     input.value = "";
     input.disabled = true;
     input.required = false;                 // ✅ 號碼不詳不必填
     input.placeholder = "號碼不詳";
     input.classList.add("opacity-50");
+
+    appearanceWrap.classList.add("hidden");
+    appearance.disabled = true;
+    appearance.required = false;
+    appearance.value = "";
   }else{
     input.disabled = false;
     input.required = true;                  // ✅ 有晶片才必填
     input.placeholder = "請輸入10或15碼數字";
     input.classList.remove("opacity-50");
+
+    appearanceWrap.classList.add("hidden");
+    appearance.disabled = true;
+    appearance.required = false;
+    appearance.value = "";
   }
 }
 toggleChipInput();
@@ -2460,7 +2554,7 @@ function buildContractHtml(payload, shopInfo, termsHtml, meta = {}){
 
   // ✅ 晶片顯示
   const chipText =
-    p.chip_status === "no_chip" ? "無晶片" :
+    p.chip_status === "no_chip" ? `無晶片（外型特徵：${p.pet_appearance || "—"}）` :
     p.chip_status === "unknown" ? "有晶片（號碼不詳）" :
     (p.pet_chip ? `有晶片（${p.pet_chip}）` : "—");
 
@@ -2875,7 +2969,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=2", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=3", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
