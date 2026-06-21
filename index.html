@@ -1492,11 +1492,12 @@ label, .form-label {
 </div>
 
 <!-- ====== 全螢幕簽名（修正版：底部按鈕永遠可見 + 右上角 X） ====== -->
-<div id="sigFullscreen" class="fullscreen-signature" style="user-select:none;-webkit-user-select:none;">
+<div id="sigFullscreen" class="fullscreen-signature" role="dialog" aria-modal="true" aria-labelledby="sigModalTitle" aria-hidden="true" style="user-select:none;-webkit-user-select:none;">
   <div class="sig-fs-top px-5 py-4 bg-hanamu-green text-white flex items-center justify-between shadow-sm">
-    <div class="font-black">請簽名</div>
+    <div id="sigModalTitle" class="font-black">請簽名</div>
 
     <button type="button" id="closeSigFsBtn"
+            aria-label="關閉簽名板"
             class="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 transition flex items-center justify-center"
             style="touch-action:manipulation;">
       <i data-lucide="x" class="w-5 h-5"></i>
@@ -1670,6 +1671,9 @@ function openPetSelectModal(records){
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
   lockPageScroll();
+
+  // ✅ A11y: 彈窗開啟後將焦點移入關閉按鈕
+  if (closeBtn) setTimeout(() => closeBtn.focus(), 100);
 
   // 按 X 關閉
   if (closeBtn) closeBtn.onclick = () => closePetSelectModal(false);
@@ -1982,6 +1986,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   function openTerms(){
   termsBackdrop.style.display = "flex";
+  termsBackdrop.setAttribute("aria-hidden", "false");
 
   agreeTermsBtn.disabled = true;
   agreeTermsBtn.className = "w-full py-4 rounded-xl font-black transition bg-gray-100 text-gray-400 disabled:cursor-not-allowed";
@@ -1992,10 +1997,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // ✅ 用你已經寫好的鎖頁方式（最穩）
   lockPageScroll();
+
+  // ✅ A11y: 彈窗開啟後將焦點移入，引導輔助科技
+  setTimeout(() => closeTermsBtn.focus(), 100);
 }
 
 function closeTerms(){
   termsBackdrop.style.display = "none";
+  termsBackdrop.setAttribute("aria-hidden", "true");
   // ✅ 解除鎖頁（加強確保）
   if (typeof unlockPageScroll === "function") {
     unlockPageScroll();
@@ -2277,6 +2286,7 @@ function unlockPageScroll(){
 
     // ✅ 使用 class 控制顯示（統一方式，避免衝突）
     sigFullscreen.classList.add("is-visible");
+    sigFullscreen.setAttribute("aria-hidden", "false");
     // ✅ 移除重複的 style.display 設定，由 CSS 控制
     // sigFullscreen.style.display = "flex";  ← 移除這行，避免與 class 衝突
 
@@ -2286,6 +2296,12 @@ function unlockPageScroll(){
     // ✅ 強制阻止 body 滾動穿透
     document.body.style.overflow = 'hidden';
     document.body.style.touchAction = 'none';
+
+    // ✅ A11y: 彈窗開啟後將焦點移入關閉按鈕
+    setTimeout(() => {
+      const closeBtn = document.getElementById("closeSigFsBtn");
+      if(closeBtn) closeBtn.focus();
+    }, 100);
 
     // ✅ 多次嘗試初始化 canvas（確保 DOM 已就緒）
     const initCanvas = (attempt = 0) => {
@@ -2423,6 +2439,7 @@ function unlockPageScroll(){
 
   function closeSigFullscreen(){
     sigFullscreen.classList.remove("is-visible");
+    sigFullscreen.setAttribute("aria-hidden", "true");
     // ✅ 移除重複的 style.display 設定，由 CSS 控制
     // sigFullscreen.style.display = "none";  ← 移除這行，避免與 class 衝突
     
@@ -2547,16 +2564,12 @@ function buildTermsHtmlFromModal(){
 function buildContractHtml(payload, shopInfo, termsHtml, meta = {}){
   const p = payload || {};
   const shop = shopInfo || {};
-
   const contractId = meta.id || "";
   const signedAtISO = p.signed_at || meta.created_at || "";
   const signedAt = signedAtISO ? `${formatTaipeiTime(signedAtISO)}` : "";
 
   // ✅ 晶片顯示
-  const chipText =
-    p.chip_status === "no_chip" ? `無晶片（外型特徵：${p.pet_appearance || "—"}）` :
-    p.chip_status === "unknown" ? "有晶片（號碼不詳）" :
-    (p.pet_chip ? `有晶片（${p.pet_chip}）` : "—");
+  const chipText = p.chip_status === "no_chip" ? `無晶片（外型特徵：${p.pet_appearance || "—"}）` : p.chip_status === "unknown" ? "有晶片（號碼不詳）" : (p.pet_chip ? `有晶片（${p.pet_chip}）` : "—");
 
   // ✅ 服務內容（含其他項目）
   let serviceText = p.service_type || "—";
@@ -2564,24 +2577,10 @@ function buildContractHtml(payload, shopInfo, termsHtml, meta = {}){
     serviceText = p.other_service_desc ? `其他項目（${p.other_service_desc}）` : "其他項目（未填說明）";
   }
 
-  // ✅ 升級加購項目（多選）
-  const upgrades = [];
-  if(p.upgrade_oral_gel) upgrades.push("口腔凝膠 100up");
-  if(p.upgrade_spa_light) upgrades.push("梅德農夫草本泥spa－輕保養200up");
-  if(p.upgrade_spa_thick) upgrades.push("梅德農夫草本泥spa－厚敷保養300up");
-  if(p.upgrade_carbon_bath) upgrades.push("日系碳酸泡泡浴 200up");
-  const upgradeText = upgrades.length ? upgrades.join("、") : "無";
-
-  const pickupText = p.pickup_time || "—";
-  const serviceDateText = p.service_date || "—";
-
-  const title = "花沐寵物沙龍｜美容契約副本";
-
-  // ✅ 產出一列 row（用 table，email 最穩）
-  const row = (k,v) => `
+  const row = (label, val) => `
     <tr>
-      <td style="padding:6px 0;color:#6b7280;font-weight:800;width:120px;vertical-align:top;">${escapeHtml(k)}</td>
-      <td style="padding:6px 0;font-weight:900;color:#111827;">${escapeHtml((v ?? "").toString().trim() || "—")}</td>
+      <td style="width:110px;padding:6px 0;color:#6B7A72;font-weight:bold;vertical-align:top;">${label}：</td>
+      <td style="padding:6px 0;color:#2C3531;font-weight:900;word-break:break-all;">${safeText(val)}</td>
     </tr>
   `;
 
@@ -2606,8 +2605,8 @@ function buildContractHtml(payload, shopInfo, termsHtml, meta = {}){
               <tr>
                 <td style="vertical-align:top;padding-right:10px;">
                   <img
-                    src="https://yribgjhptlmbmtrlfube.supabase.co/storage/v1/object/public/logo/logo.png"
-                    alt="花沐寵物沙龍"
+                    src="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png"
+                    alt="沐菓自然沐浴🌿寵物美容"
                     width="44"
                     height="44"
                     style="display:block;width:44px;height:44px;object-fit:contain;border:0;outline:none;text-decoration:none;border-radius:10px;"
@@ -2615,7 +2614,7 @@ function buildContractHtml(payload, shopInfo, termsHtml, meta = {}){
                 </td>
                 <td style="vertical-align:top;">
                   <div style="font-size:18px;font-weight:900;margin:0 0 4px;line-height:1.2;color:#111827;">
-                    花沐寵物沙龍｜契約副本
+                    沐菓自然沐浴🌿寵物美容｜契約副本
                   </div>
                 </td>
               </tr>
@@ -2916,14 +2915,15 @@ location.hash = "#success";
 }
 </script>
 <!-- ✅ 舊客搜尋：寵物選擇彈窗（像宿洗：手機貼底、桌機置中） -->
-<div id="petSelectModal" aria-hidden="true" style="display:none;">
+<div id="petSelectModal" role="dialog" aria-modal="true" aria-labelledby="petModalTitle" aria-hidden="true" style="display:none;">
   <div class="pet-modal" style="-webkit-overflow-scrolling:touch;">
     <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
       <div>
-        <div class="font-black text-hanamu-dark">搜尋到舊客紀錄</div>
+        <div id="petModalTitle" class="font-black text-hanamu-dark">搜尋到舊客紀錄</div>
         <div class="text-[11px] font-bold text-gray-400 mt-0.5">請選擇要帶入的毛孩資料</div>
       </div>
       <button type="button" id="petModalCloseBtn"
+              aria-label="關閉搜尋紀錄"
               class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 font-black flex items-center justify-center"
               style="touch-action:manipulation;">
         <i data-lucide="x" class="w-5 h-5"></i>
