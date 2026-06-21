@@ -162,13 +162,21 @@ body{
   overscroll-behavior: contain;
 }
     .fullscreen-signature{
-      position:fixed; inset:0;
-      z-index: 80;
-background: var(--bg);
-      display:none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: var(--bg);
+      display: none !important;
       flex-direction: column;
       touch-action: none;
       overscroll-behavior: contain;
+      width: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+    }
+    .fullscreen-signature.is-visible{
+      display: flex !important;
     }
     /* ✅ 花沐：粉霧玫瑰 CTA（柔和、乾淨、不要粉→綠跳色） */
 .submit-cta{
@@ -445,11 +453,18 @@ html{
 /* ✅ 防止手機左右滑動（更像 APP） */
 html{
   overflow-x: hidden !important;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  height: 100%;
 }
 body{
   overflow-x: hidden !important;
+  overflow-y: auto;
   width: 100%;
   max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
 }
   </style>
 </head>
@@ -461,14 +476,18 @@ body{
 <div class="bg-blob w-[22rem] h-[22rem] bg-hanamu-wood/20 -bottom-24 -right-24"></div>
 
 <!-- 頂部導覽 -->
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-hanamu-green/10">
-  <div class="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
+<header class="z-50 bg-white/80 backdrop-blur-xl border-b border-hanamu-green/10" style="position: fixed; top: 0; left: 0; right: 0; width: 100%; max-width: 100%;">
+  <div class="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between" style="width: 100%; max-width: 48rem; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;">
     <a href="#home" class="flex items-center gap-3">
-      <img
-        src="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png"
-        alt="沐菓自然沐浴 Logo"
-        class="w-10 h-10 object-contain"
-      />
+      <div class="w-10 h-10 rounded-full overflow-hidden relative" style="background: linear-gradient(135deg, #e8f0ec 0%, #d5e4dd 50%, #c2d8ce 100%); border: 2px solid rgba(140,166,156,0.25);">
+        <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%); pointer-events: none;"></div>
+        <img
+          src="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png"
+          alt="沐菓自然沐浴 Logo"
+          class="w-full h-full object-contain relative z-10 drop-shadow-sm"
+          style="filter: drop-shadow(0 2px 8px rgba(140,166,156,0.20));"
+        />
+      </div>
       <div class="font-black tracking-wide text-hanamu-dark">
         沐菓自然沐浴🌿寵物美容
         <div class="text-[10px] font-bold text-hanamu-wood/70 -mt-0.5">Muguo Natural Bath & Grooming</div>
@@ -485,7 +504,7 @@ body{
   </div>
 </header>
 
-<main class="max-w-3xl mx-auto px-5 pb-24">
+<main class="max-w-3xl mx-auto px-5 pb-24" style="padding-top: 76px;">
 
   <!-- ====== 首頁：只放公司資訊（不放跑馬燈、不放商品） ====== -->
   <section id="view-home" class="pt-8">
@@ -1258,7 +1277,7 @@ body{
                disabled:opacity-50 disabled:cursor-not-allowed">
   <span class="relative z-10 flex items-center justify-center gap-3 tracking-wide">
     <i id="submitIconSend" data-lucide="send" class="w-5 h-5"></i>
-    <i id="submitIconLoading" data-lucide="loader-circle" class="w-5 h-5 hidden animate-spin"></i>
+    <i id="submitIconLoading" data-lucide="loader" class="w-5 h-5 hidden animate-spin"></i>
     <span id="submitLabel">確認並提交契約</span>
   </span>
 </button>
@@ -1407,9 +1426,9 @@ body{
     </button>
   </div>
 
-  <div class="sig-fs-body">
-    <div class="sig-fs-canvasWrap">
-      <canvas id="sigCanvas" class="w-full h-full"></canvas>
+  <div class="sig-fs-body" style="flex:1;min-height:0;display:flex;flex-direction:column;padding:0.75rem;">
+    <div class="sig-fs-canvasWrap" style="flex:1;min-height:200px;background:#ffffff;border-radius:1rem;border:2px solid rgba(155,122,94,0.20);overflow:hidden;">
+      <canvas id="sigCanvas" style="width:100%;height:100%;display:block;touch-action:none;"></canvas>
     </div>
   </div>
 
@@ -2159,29 +2178,44 @@ function unlockPageScroll(){
       return;
     }
 
-    // ✅ 先顯示全螢幕簽名板
+    // ✅ 使用 class 控制顯示（避免 inline style 被覆蓋）
+    sigFullscreen.classList.add("is-visible");
     sigFullscreen.style.display = "flex";
-    sigFullscreen.style.position = "fixed";
-    sigFullscreen.style.inset = "0";
-    sigFullscreen.style.zIndex = "99999";
-    sigFullscreen.style.background = "#F9F6F0";
 
-    // ✅ 鎖定頁面滾動（使用 lockPageScroll）
+    // ✅ 鎖定頁面滾動
     lockPageScroll();
 
-    // ✅ 延遲初始化 canvas，確保 DOM 已渲染完成
-    setTimeout(() => {
+    // ✅ 多次嘗試初始化 canvas（確保 DOM 已就緒）
+    const initCanvas = (attempt = 0) => {
       const canvas = document.getElementById("sigCanvas");
-      if (!canvas) return;
+      if (!canvas) {
+        if (attempt < 5) {
+          setTimeout(() => initCanvas(attempt + 1), 200);
+        }
+        return;
+      }
 
       // 取得父容器尺寸
       const wrap = canvas.parentElement;
-      if (!wrap) return;
+      if (!wrap) {
+        if (attempt < 5) {
+          setTimeout(() => initCanvas(attempt + 1), 200);
+        }
+        return;
+      }
 
       const rect = wrap.getBoundingClientRect();
+      // 確保尺寸大於 0
+      if (rect.width < 10 || rect.height < 10) {
+        if (attempt < 5) {
+          setTimeout(() => initCanvas(attempt + 1), 200);
+        }
+        return;
+      }
+
       const dpr = window.devicePixelRatio || 1;
 
-      // 設定 canvas 尺寸（避免模糊）
+      // 設定 canvas 尺寸
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       canvas.style.width = rect.width + "px";
@@ -2190,7 +2224,7 @@ function unlockPageScroll(){
       const ctx = canvas.getContext("2d");
       ctx.scale(dpr, dpr);
 
-      // 如果已有 signaturePad 實例，先銷毀再重建
+      // 清除舊實例
       if (signaturePad) {
         try { signaturePad.off(); } catch(e) {}
         signaturePad = null;
@@ -2203,7 +2237,7 @@ function unlockPageScroll(){
         backgroundColor: "#ffffff"
       });
 
-      // 如果有舊簽名資料，載入
+      // 載入舊簽名
       if (sigDataURL) {
         try {
           signaturePad.fromDataURL(sigDataURL);
@@ -2213,47 +2247,19 @@ function unlockPageScroll(){
       }
 
       if (window.lucide) window.lucide.createIcons();
+    };
 
-    }, 100);
-
-    // ✅ 強制重新計算版面
-    setTimeout(() => {
-      const canvas = document.getElementById("sigCanvas");
-      if (canvas && canvas.parentElement) {
-        const wrap = canvas.parentElement;
-        const rect = wrap.getBoundingClientRect();
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
-        canvas.style.width = rect.width + "px";
-        canvas.style.height = rect.height + "px";
-        const ctx = canvas.getContext("2d");
-        ctx.scale(dpr, dpr);
-        if (signaturePad) {
-          // 重新設定尺寸後，需要重新初始化
-          try {
-            const data = signaturePad.toData();
-            signaturePad = new SignaturePad(canvas, {
-              minWidth: 2,
-              maxWidth: 4,
-              penColor: "#2C3531",
-              backgroundColor: "#ffffff"
-            });
-            if (sigDataURL) {
-              signaturePad.fromDataURL(sigDataURL);
-            }
-          } catch(e) {}
-        }
-      }
-    }, 300);
+    // 延遲初始化
+    setTimeout(() => initCanvas(0), 150);
+    // 再次嘗試（確保尺寸正確）
+    setTimeout(() => initCanvas(0), 400);
+    // 第三次嘗試（手機可能更慢）
+    setTimeout(() => initCanvas(0), 700);
   }
 
   function closeSigFullscreen(){
+    sigFullscreen.classList.remove("is-visible");
     sigFullscreen.style.display = "none";
-    sigFullscreen.style.position = "";
-    sigFullscreen.style.inset = "";
-    sigFullscreen.style.zIndex = "";
-    sigFullscreen.style.background = "";
     unlockPageScroll();
   }
 
@@ -2778,7 +2784,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=9", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=10", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
