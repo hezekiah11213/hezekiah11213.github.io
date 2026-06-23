@@ -6,8 +6,8 @@
   <meta name="format-detection" content="telephone=no" />
   <link rel="icon" href="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
-  <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#8CA69C">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#90A399">
   <title>沐菓自然沐浴🌿寵物美容｜數位美容契約</title>
 
   <!-- Tailwind -->
@@ -28,12 +28,12 @@
         extend: {
 colors: {
   hanamu: {
-    green: "#8CA69C",  // ✅ 主色：莫蘭迪淺藍綠（完美契合沐菓自然洗沐感）
-    wood:  "#6B7A72",  // 副色：莫蘭迪深綠灰（用於文字與標題輔色）
-    bg:    "#F9F6F0",  // 底色：質感米白色
-    dark:  "#2C3531",  // 深色字體
+    green: "#90A399",  // ✅ 主色：尤加利綠（契合您的圖片設計）
+    wood:  "#6C7A73",  // 副色：莫蘭迪深綠灰
+    bg:    "#D6DED6",  // 底色：鼠尾草綠背景
+    dark:  "#39423D",  // 深色字體：炭灰色
     soft:  "#FFFFFF",
-    accent:"#D1E8E2",  // 輔助淺色調
+    accent:"#C4D1CB",  // 輔助淺色調
     red:   "#D67D7D"
   }
 },
@@ -48,8 +48,8 @@ colors: {
   <style>
     
 :root{
-  --bg: #F9F6F0; /* 米白色 */
-  --text: #2C3531;
+  --bg: #D6DED6; /* 鼠尾草綠 */
+  --text: #39423D; /* 炭灰色 */
 }
 body{
   font-family: "Zen Maru Gothic","Noto Sans TC",sans-serif;
@@ -58,12 +58,8 @@ body{
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 
-  /* ✅ 沐菓溫柔莫蘭迪藍綠漸層底 */
+  /* ✅ 統一乾淨的鼠尾草綠底色，移除漸層干擾 */
   background-color: var(--bg);
-  background-image:
-    radial-gradient(circle at 12% 18%, rgba(140,166,156,.15) 0%, rgba(140,166,156,0) 42%),
-    radial-gradient(circle at 88% 82%, rgba(209,232,226,.12) 0%, rgba(209,232,226,0) 45%),
-    radial-gradient(circle at 55% 45%, rgba(140,166,156,.08) 0%, rgba(140,166,156,0) 55%);
   background-attachment: fixed;
 }
     /* 沐菓感：柔霧玻璃卡 */
@@ -543,15 +539,14 @@ label, .form-label {
 <!-- 頂部導覽 -->
 <header class="z-50 bg-white/80 backdrop-blur-xl border-b border-hanamu-green/10" style="position: fixed; top: 0; left: 0; right: 0; width: 100%; max-width: 100%;">
   <div class="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between" style="width: 100%; max-width: 48rem; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem;">
-    <a href="#home" class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full overflow-hidden relative" style="background: linear-gradient(135deg, #e8f0ec 0%, #d5e4dd 50%, #c2d8ce 100%); border: 2px solid rgba(140,166,156,0.25);">
-        <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%); pointer-events: none;"></div>
+<a href="#home" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-hanamu-green/15 border border-hanamu-green/30 flex items-center justify-center p-1 relative overflow-hidden backdrop-blur-sm shadow-inner transition-all duration-300 hover:bg-hanamu-green/25">
         <img
           src="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png"
           alt="沐菓自然沐浴 Logo"
-          class="w-full h-full object-contain relative z-10 drop-shadow-sm"
-          style="filter: drop-shadow(0 2px 8px rgba(140,166,156,0.20));"
+          class="w-full h-full object-contain relative z-10 opacity-90 filter contrast-105"
         />
+        <div class="absolute inset-0 bg-gradient-to-tr from-hanamu-green/10 to-transparent pointer-events-none z-20"></div>
       </div>
       <div class="font-black tracking-wide text-hanamu-dark">
         沐菓自然沐浴🌿寵物美容
@@ -572,19 +567,15 @@ label, .form-label {
 <main class="max-w-3xl mx-auto px-5 pb-24" style="padding-top: 76px;">
 
   <!-- ====== 首頁：只放公司資訊（不放跑馬燈、不放商品） ====== -->
-  <section id="view-home" class="pt-8">
-    <div class="glass-card p-7 md:p-10 text-center relative overflow-hidden">
-      <div class="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-hanamu-accent/15 blur-2xl"></div>
+<section id="view-home" class="pt-8">
+    <div class="p-7 md:p-10 text-center relative overflow-hidden">
 
-<div class="w-32 md:w-40 mx-auto p-3 rounded-3xl shadow-sm relative overflow-hidden" style="background: linear-gradient(135deg, #e8f0ec 0%, #d5e4dd 50%, #c2d8ce 100%); border: 2px solid rgba(140,166,156,0.25);">
-  <!-- 柔和光暈遮罩 -->
-  <div class="absolute inset-0" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%); pointer-events: none;"></div>
+<div class="w-48 md:w-56 mx-auto relative overflow-hidden">
   <img
     id="heroLogo"
     src="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png"
     alt="沐菓自然沐浴"
-    class="w-full h-auto object-contain relative z-10 drop-shadow-sm"
-    style="filter: drop-shadow(0 2px 8px rgba(140,166,156,0.20));"
+    class="w-full h-auto object-contain relative z-10"
   />
 </div>
 
@@ -594,6 +585,7 @@ label, .form-label {
 <p class="mt-2 text-sm font-bold text-hanamu-wood/80 tracking-wider">
         自然沐浴｜精緻造型｜寵物沙龍
       </p>
+
       <!-- 入口按鈕（像宿洗那樣清楚導引） -->
       <div class="mt-7 grid gap-3">
         <a href="#grooming"
@@ -883,89 +875,33 @@ label, .form-label {
       <input type="date" name="parasite_prevent_date" class="mt-2 w-full cute-input px-4 py-3" />
     </div>
 
-    <!-- 性別 -->
-    <div class="md:col-span-2">
-      <label class="text-sm font-black text-hanamu-wood">性別 <span class="text-red-500">*</span></label>
-      <div class="mt-2 grid grid-cols-2 gap-3">
-        <label class="p-4 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer">
-          <input type="radio" name="pet_sex" value="男生" class="mr-2 accent-hanamu-green" required> 男生
-        </label>
-        <label class="p-4 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer">
-          <input type="radio" name="pet_sex" value="女生" class="mr-2 accent-hanamu-green" required> 女生
-        </label>
+    <!-- 性別與結育 -->
+    <div class="md:col-span-2 grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-sm font-black text-hanamu-wood">性別 <span class="text-red-500">*</span></label>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="pet_sex" value="男生" class="mr-1.5 accent-hanamu-green" required> 男生
+          </label>
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="pet_sex" value="女生" class="mr-1.5 accent-hanamu-green" required> 女生
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="text-sm font-black text-hanamu-wood">結育 <span class="text-red-500">*</span></label>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="is_neutered" value="是" class="mr-1.5 accent-hanamu-green" required> 是
+          </label>
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="is_neutered" value="否" class="mr-1.5 accent-hanamu-green" required> 否
+          </label>
+        </div>
       </div>
     </div>
 
-    <!-- 結紮/親人/親狗/攻擊性/病史 -->
-    <div class="md:col-span-2 grid md:grid-cols-3 gap-3">
-      <div>
-        <label class="text-sm font-black text-hanamu-wood">結育 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_neutered" value="是" class="mr-2 accent-hanamu-green" required> 是
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_neutered" value="否" class="mr-2 accent-hanamu-green" required> 否
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <label class="text-sm font-black text-hanamu-wood">親人 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_friendly" value="是" class="mr-2 accent-hanamu-green" required> 是
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_friendly" value="否" class="mr-2 accent-hanamu-green" required> 否
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <label class="text-sm font-black text-hanamu-wood">親狗 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_dog_friendly" value="是" class="mr-2 accent-hanamu-green" required> 是
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_dog_friendly" value="否" class="mr-2 accent-hanamu-green" required> 否
-          </label>
-        </div>
-      </div>
-
-      <div class="md:col-span-3">
-        <label class="text-sm font-black text-hanamu-wood">具攻擊性 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-3">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_aggressive" value="是" class="mr-2 accent-hanamu-green" required> 是
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="is_aggressive" value="否" class="mr-2 accent-hanamu-green" required> 否
-          </label>
-        </div>
-      </div>
-
-      <div class="md:col-span-3">
-        <label class="text-sm font-black text-hanamu-wood">過往病史及重大外傷 <span class="text-red-500">*</span></label>
-        <div class="text-[11px] font-bold text-hanamu-red mt-1">如：心臟病/氣喘/氣管塌陷/癲癇/前庭問題/髖關節/骨折經歷/白內障/乾眼症/腎臟病/胰臟炎/腫瘤等</div>
-        <div class="mt-2 grid grid-cols-2 gap-3">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="has_history" value="有病史" class="mr-2 accent-hanamu-green" required> 有病史
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white font-black flex justify-center cursor-pointer">
-            <input type="radio" name="has_history" value="無病史" class="mr-2 accent-hanamu-green" required> 無病史
-          </label>
-        </div>
-        <textarea name="history_notes" class="mt-3 w-full cute-input px-4 py-3" rows="2" placeholder="若有病史或重大外傷請詳述..."></textarea>
-      </div>
-
-      <!-- 不喜歡事項與其他說明 -->
-      <div class="md:col-span-3">
-        <label class="text-sm font-black text-hanamu-wood">不喜歡事項與其他說明</label>
-        <div class="text-[11px] font-bold text-gray-500 mt-1">如：剪指甲／清耳朵／沖水／吹風／分離焦慮等</div>
-        <textarea name="dislike_notes" class="mt-2 w-full cute-input px-4 py-3" rows="2" placeholder="請填寫不喜歡事項、外觀異常或其他補充說明..."></textarea>
-      </div>
     </div>
   </div>
 
@@ -1091,11 +1027,18 @@ label, .form-label {
             <input name="temperament_other" class="w-full cute-input px-3 py-2 text-sm" placeholder="其他個性描述" />
           </div>
         </div>
+              <!-- 不喜歡事項與其他說明 -->
+      <div class="md:col-span-3">
+        <label class="text-sm font-black text-hanamu-wood">不喜歡事項與其他說明</label>
+        <div class="text-[11px] font-bold text-gray-500 mt-1">如：剪指甲／清耳朵／沖水／吹風／分離焦慮等</div>
+        <textarea name="dislike_notes" class="mt-2 w-full cute-input px-4 py-3" rows="2" placeholder="請填寫不喜歡事項、外觀異常或其他補充說明..."></textarea>
+      </div>
+    </div>
       </div>
 
-      <!-- 四、其他說明 -->
+      <!-- 三、其他說明 -->
       <div>
-        <label class="text-sm font-black text-hanamu-wood">四、其他說明</label>
+        <label class="text-sm font-black text-hanamu-wood">三、其他說明</label>
         <textarea name="health_other_notes" class="mt-2 w-full cute-input px-4 py-3" rows="2" placeholder="其他健康相關補充說明..."></textarea>
       </div>
     </div>
@@ -1120,7 +1063,6 @@ label, .form-label {
             <div class="flex items-center gap-2">
               <span class="text-lg">🏥</span>
               <span class="font-black text-hanamu-dark text-base">同意由本店送往鄰近動物醫院救治</span>
-              <span class="ml-auto text-[10px] font-black bg-hanamu-green/20 text-hanamu-green px-3 py-1 rounded-full">特約推薦</span>
             </div>
             <div class="mt-3 bg-white rounded-xl border border-hanamu-green/10 p-4 space-y-1.5 text-sm font-bold text-gray-700">
               <div class="flex items-center gap-2">
@@ -1136,9 +1078,6 @@ label, .form-label {
                 <span>桃園市桃園區新埔七街134號</span>
               </div>
             </div>
-            <div class="mt-2 text-[11px] font-bold text-hanamu-green/70 flex items-center gap-1">
-              <span>✅</span> 本店特約合作動物醫院，緊急狀況優先送往
-            </div>
           </div>
         </label>
 
@@ -1153,52 +1092,12 @@ label, .form-label {
             </div>
           </div>
         </label>
+        <p class="text-xs text-gray-500 pl-6 mt-1">（備註：如影響緊急救治時效，本店得改送最近適當之動物醫院）</p>
       </div>
     </div>
   </div>
 </section>
-      <!-- 服務資訊 -->
-<section class="cute-card p-7 md:p-8 space-y-5" id="secService">
-  <div class="flex items-center gap-3 border-b-2 border-dashed border-hanamu-wood/10 pb-4">
-    <div class="w-10 h-10 rounded-full bg-hanamu-green/15 flex items-center justify-center text-xl">📋</div>
-    <div>
-      <h3 class="text-lg font-black text-hanamu-dark">美容服務安排 <span class="text-red-500">*</span></h3>
-      <div class="text-[10px] font-bold text-gray-400 tracking-wider">請填寫服務日期與預計接回時間</div>
-    </div>
-  </div>
 
-  <!-- 服務日期 -->
-  <div>
-    <label class="text-sm font-black text-hanamu-wood">服務日期 <span class="text-red-500">*</span></label>
-    <input type="date" name="service_date" id="serviceDate" required
-           class="mt-2 w-full cute-input px-4 py-3" />
-  </div>
-
-  <!-- 接回時間 -->
-  <div class="pt-2 border-t border-dashed border-hanamu-wood/10">
-    <label class="text-sm font-black text-hanamu-wood">預計接回時間<span class="text-red-500">*</span></label>
-
-    <div class="mt-2 flex gap-3 items-stretch">
-      <button type="button" id="btnNotifyLater" onclick="togglePickupTimeMode()"
-              class="px-4 rounded-2xl border-2 border-hanamu-green/30 bg-white font-black text-xs text-hanamu-green hover:bg-hanamu-green hover:text-white transition">
-        另行通知
-      </button>
-
-      <input type="time" name="pickup_time" id="pickupTime" required class="w-full cute-input px-4 py-3" />
-      <input type="text" id="pickupTimeText" class="hidden w-full cute-input px-4 py-3 bg-gray-100 text-gray-500 font-black text-center"
-             value="另行通知美容完成時間" readonly />
-    </div>
-
-    <!-- 接回時間錯誤提示 -->
-    <div id="pickupErr" class="hidden mt-2 text-xs font-black text-hanamu-red">
-      ⚠️ 請選擇預計接回時間，或點選「另行通知」。
-    </div>
-
-    <div class="mt-3 bg-hanamu-green/5 border border-hanamu-green/15 rounded-2xl p-4 text-xs font-bold text-hanamu-dark leading-relaxed">
-      家長應於美容完成通知後 <span class="text-hanamu-green font-black">1 小時內</span> 接回；逾時 <span class="text-hanamu-green font-black">30 分鐘</span> 起酌收逾時費 <span class="text-hanamu-red font-black">50元/30分鐘</span>（未滿以30分鐘計）。
-    </div>
-  </div>
-</section>
       <!-- 沐菓特別同意事項（3點勾選） -->
       <section class="cute-card p-7 md:p-8 space-y-5" id="secAgreements">
         <div class="flex items-center gap-3 border-b-2 border-dashed border-hanamu-wood/10 pb-4">
@@ -1216,20 +1115,29 @@ label, .form-label {
             </div>
           </label>
 
-          <!-- 2. 剪指甲服務說明 -->
+          <!-- 2. 延遲接回／寄放服務說明 -->
+          <label class="flex items-start gap-3 p-4 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition">
+            <input type="checkbox" name="agree_delayed_pickup" required class="mt-1.5 w-5 h-5 shrink-0 accent-hanamu-green" />
+            <div class="text-sm font-medium text-gray-700 leading-relaxed">
+              <span class="font-black text-hanamu-dark block text-base mb-1">2. 延遲接回／寄放服務說明</span>
+              如預計延遲接回，預約時需主動告知，以利確認是否能安排寄放及相關費用。
+            </div>
+          </label>
+
+          <!-- 3. 剪指甲服務說明 -->
           <label class="flex items-start gap-3 p-4 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition">
             <input type="checkbox" name="agree_nail_trim" required class="mt-1.5 w-5 h-5 shrink-0 accent-hanamu-green" />
             <div class="text-sm font-medium text-gray-700 leading-relaxed">
-              <span class="font-black text-hanamu-dark block text-base mb-1">2. 剪指甲服務說明</span>
+              <span class="font-black text-hanamu-dark block text-base mb-1">3. 剪指甲服務說明</span>
               本店進行剪指甲服務時，以不流血為原則。若毛孩因個性或緊張反應，過程中仍可能不慎造成流血情形。如家長對此較為介意，可於服務前主動告知，本店可視情況改以磨指甲的方式處理。
             </div>
           </label>
 
-          <!-- 3. 美容過程原則 -->
+          <!-- 4. 美容過程原則 -->
           <label class="flex items-start gap-3 p-4 rounded-2xl border-2 border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition">
             <input type="checkbox" name="agree_process" required class="mt-1.5 w-5 h-5 shrink-0 accent-hanamu-green" />
             <div class="text-sm font-medium text-gray-700 leading-relaxed">
-              <span class="font-black text-hanamu-dark block text-base mb-1">3. 美容過程原則</span>
+              <span class="font-black text-hanamu-dark block text-base mb-1">4. 美容過程原則</span>
               本店進行美容服務時，以毛孩安全與不受傷為最優先考量，不採強迫方式。如毛孩於過程中出現高度緊張、抗拒或持續不配合情形，本店得依現場狀況調整、簡化或中止部分美容項目，其完成度可能因此有所差異，敬請理解。
             </div>
           </label>
@@ -1283,25 +1191,6 @@ label, .form-label {
       <span class="font-black" id="shop_address">桃園市桃園區天祥七街102號1樓</span>
     </div>
 
-    <div class="md:col-span-2 pt-2 border-t border-dashed border-hanamu-wood/10">
-      <span class="text-gray-400 font-bold block text-[11px]">特約緊急送醫場所</span>
-
-      <div class="mt-2 bg-white rounded-2xl border border-hanamu-wood/10 p-4 space-y-2">
-        <div class="grid md:grid-cols-2 gap-2">
-          <div>
-            <span class="text-gray-400 font-bold block text-[11px]">特約動物醫院</span>
-            <span class="font-black" id="shop_er_name">吉布動物醫院</span>
-          </div>
-          <div>
-            <span class="text-gray-400 font-bold block text-[11px]">聯絡電話</span>
-            <span class="font-black">03-358-5664</span>
-          </div>
-          <div class="md:col-span-2">
-            <span class="text-gray-400 font-bold block text-[11px]">地址</span>
-            <span class="font-black" id="shop_er_address">桃園市桃園區新埔七街134號</span>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -2969,7 +2858,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=3", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=4", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
