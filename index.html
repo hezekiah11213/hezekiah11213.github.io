@@ -47,6 +47,10 @@ colors: {
 
   <style>
     
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 :root{
   --bg: #D6DED6; /* 鼠尾草綠 */
   --text: #39423D; /* 炭灰色 */
@@ -422,12 +426,21 @@ body{
 html{
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
   overflow-x: hidden;
   width: 100%;
+  max-width: 100%;
   min-height: 100vh;
+}
+
+/* 防止任何元素超出螢幕寬度 */
+input, select, textarea {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* iOS 輸入不放大 / 增加點擊舒適度 */
@@ -446,16 +459,23 @@ body {
   }
 
   input, select, textarea, button{
-    font-size: 16px;
+    font-size: 16px !important;
+    max-width: 100%;
   }
 
   input, select, textarea{
     scroll-margin-top: 90px;
+    width: 100%;
   }
 
   .submit-cta{
     padding-top: 18px;
     padding-bottom: 18px;
+  }
+
+  /* 手機端：三欄 grid 改成單欄，避免輸入框被壓縮 */
+  .grid.md\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
   }
 }
   /* ===============================
@@ -2114,8 +2134,11 @@ function lockPageScroll(){
   document.body.style.left = "0";
   document.body.style.right = "0";
   document.body.style.width = "100%";
+  document.body.style.maxWidth = "100%";
   document.body.style.overflow = "hidden";
+  document.body.style.overflowX = "hidden";
   document.documentElement.style.overflow = "hidden";
+  document.documentElement.style.overflowX = "hidden";
 }
 
 function unlockPageScroll(){
@@ -2124,9 +2147,11 @@ function unlockPageScroll(){
   document.body.style.left = "";
   document.body.style.right = "";
   document.body.style.width = "";
+  document.body.style.maxWidth = "";
   document.body.style.overflow = "";
+  document.body.style.overflowX = "";
   document.documentElement.style.overflow = "";
-  // 確保在解鎖時，能正確回到鎖定前的位置
+  document.documentElement.style.overflowX = "";
   window.scrollTo({
     top: __scrollY,
     behavior: 'instant'
@@ -2858,7 +2883,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=4", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=5", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
