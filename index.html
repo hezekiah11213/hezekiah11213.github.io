@@ -842,6 +842,34 @@ label, .form-label {
       <input name="pet_color" class="mt-2 w-full cute-input px-4 py-3" placeholder="例：棕白" />
     </div>
 
+        <!-- 性別與結育 -->
+    <div class="md:col-span-2 grid grid-cols-2 gap-4">
+      <div>
+        <label class="text-sm font-black text-hanamu-wood">性別 <span class="text-red-500">*</span></label>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="pet_sex" value="男生" class="mr-1.5 accent-hanamu-green" required> 男生
+          </label>
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="pet_sex" value="女生" class="mr-1.5 accent-hanamu-green" required> 女生
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="text-sm font-black text-hanamu-wood">結育 <span class="text-red-500">*</span></label>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="is_neutered" value="是" class="mr-1.5 accent-hanamu-green" required> 是
+          </label>
+          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
+            <input type="radio" name="is_neutered" value="否" class="mr-1.5 accent-hanamu-green" required> 否
+          </label>
+        </div>
+      </div>
+    </div>
+
+
     <div>
       <label class="text-sm font-black text-hanamu-wood">生日 / 年齡 <span class="text-red-500">*</span></label>
       <div class="mt-2 flex items-center gap-2">
@@ -889,33 +917,6 @@ label, .form-label {
     <div>
       <label class="text-sm font-black text-hanamu-wood">寄生蟲預防日期</label>
       <input type="date" name="parasite_prevent_date" class="mt-2 w-full cute-input px-4 py-3" />
-    </div>
-
-    <!-- 性別與結育 -->
-    <div class="md:col-span-2 grid grid-cols-2 gap-4">
-      <div>
-        <label class="text-sm font-black text-hanamu-wood">性別 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
-            <input type="radio" name="pet_sex" value="男生" class="mr-1.5 accent-hanamu-green" required> 男生
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
-            <input type="radio" name="pet_sex" value="女生" class="mr-1.5 accent-hanamu-green" required> 女生
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <label class="text-sm font-black text-hanamu-wood">結育 <span class="text-red-500">*</span></label>
-        <div class="mt-2 grid grid-cols-2 gap-2">
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
-            <input type="radio" name="is_neutered" value="是" class="mr-1.5 accent-hanamu-green" required> 是
-          </label>
-          <label class="p-3 rounded-2xl border-2 border-gray-200 bg-white flex items-center justify-center font-black cursor-pointer text-sm">
-            <input type="radio" name="is_neutered" value="否" class="mr-1.5 accent-hanamu-green" required> 否
-          </label>
-        </div>
-      </div>
     </div>
 
     </div>
@@ -1159,7 +1160,7 @@ label, .form-label {
       <section class="cute-card p-7 md:p-8 space-y-5" id="secAgreements">
         <div class="flex items-center gap-3 border-b-2 border-dashed border-hanamu-wood/10 pb-4">
           <div class="text-2xl">🌿</div>
-          <h3 class="text-lg font-black text-hanamu-dark">注意事項 <span class="text-red-500">*</span></h3>
+          <h3 class="text-lg font-black text-hanamu-dark">注意事項<span class="text-red-500">（請逐項閱讀並勾選） *</span></h3>
         </div>
         
         <div class="space-y-4">
@@ -2920,7 +2921,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=6", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=7", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
