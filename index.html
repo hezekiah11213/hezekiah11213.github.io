@@ -2,7 +2,7 @@
 <html lang="zh-Hant-TW">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="format-detection" content="telephone=no" />
   <link rel="icon" href="https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png">
   <link rel="apple-touch-icon" href="/icons/icon-192.png">
@@ -178,6 +178,50 @@ body{
     max-height: 100dvh;
   }
 }
+    /* ===============================
+   ✅ Mobile App-like Style Tuning
+   =============================== */
+
+/* 手機隱藏滾動條，介面更乾淨 */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+  body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+
+/* 手機頭部沉浸式設計 */
+@media (max-width: 768px) {
+  header {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(144, 163, 153, 0.15);
+    padding-top: env(safe-area-inset-top);
+  }
+  header .max-w-3xl {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+}
+
+/* 手機頁面內容與頂部無縫貼合 */
+@media (max-width: 768px) {
+  main {
+    padding-top: 68px !important;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid rgba(144, 163, 153, 0.12) !important;
+  }
+}
+
     /* ✅ 粉霧玫瑰 CTA（柔和、乾淨） */
 .submit-cta{
   background: linear-gradient(90deg, #A4BEB3 0%, #8CA69C 45%, #738E83 100%);
@@ -1059,46 +1103,68 @@ label, .form-label {
       <!-- 二、病史 -->
       <div>
         <label class="text-sm font-black text-hanamu-wood">二、病史</label>
-        <div class="mt-2 bg-white rounded-2xl border border-hanamu-wood/10 p-4 space-y-3">
-          <div class="flex items-center gap-4">
-            <label class="flex items-center gap-2 text-sm font-bold text-gray-700">
-              <input type="radio" name="has_history_v2" value="無病史" class="accent-hanamu-green" checked /> 無病史
-            </label>
-            <label class="flex items-center gap-2 text-sm font-bold text-gray-700">
-              <input type="radio" name="has_history_v2" value="有病史" class="accent-hanamu-green" /> 有病史（請詳述）
-            </label>
+        <div class="mt-3 space-y-3">
+          <div class="bg-white rounded-2xl border border-hanamu-wood/10 p-4">
+            <div class="flex items-center gap-4 mb-2">
+              <span class="text-sm font-black text-hanamu-dark w-14">病史</span>
+              <label class="flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-hanamu-green/30 bg-hanamu-green/5 cursor-pointer hover:bg-hanamu-green/10 transition">
+                <input type="radio" name="has_history_v2" value="無病史" class="w-4 h-4 accent-hanamu-green" checked />
+                <span class="text-sm font-bold text-gray-700">無病史</span>
+              </label>
+              <label class="flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-gray-200 bg-white cursor-pointer hover:border-hanamu-red/40 transition">
+                <input type="radio" name="has_history_v2" value="有病史" class="w-4 h-4 accent-hanamu-red" />
+                <span class="text-sm font-bold text-gray-700">有病史（請詳述）</span>
+              </label>
+            </div>
+            <div class="text-[11px] font-bold text-hanamu-red mt-2">如：心臟病／氣喘／氣管塌陷／癲癇／前庭問題／髖關節／骨折經歷／白內障／乾眼症／腎臟病／胰臟炎／腫瘤</div>
+            <textarea name="history_notes_v2" class="mt-3 w-full cute-input px-4 py-3" rows="2" placeholder="請詳述病史或重大外傷..."></textarea>
           </div>
-          <div class="text-[11px] font-bold text-hanamu-red">如：心臟病／氣喘／氣管塌陷／癲癇／前庭問題／髖關節／骨折經歷／白內障／乾眼症／腎臟病／胰臟炎／腫瘤</div>
-          <textarea name="history_notes_v2" class="mt-1 w-full cute-input px-4 py-3" rows="2" placeholder="請詳述病史或重大外傷..."></textarea>
         </div>
       </div>
 
       <!-- 三、個性特質 -->
       <div>
         <label class="text-sm font-black text-hanamu-wood">三、個性特質</label>
-        <div class="mt-2 bg-white rounded-2xl border border-hanamu-wood/10 p-4 space-y-3">
-          <div class="flex flex-wrap items-center gap-3">
-            <span class="text-sm font-bold text-gray-500">特質：</span>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_stable" value="個性穩定" class="accent-hanamu-green" /> 個性穩定</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_friendly" value="親人" class="accent-hanamu-green" /> 親人</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_dog_friendly" value="親狗" class="accent-hanamu-green" /> 親狗</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_nervous" value="緊張" class="accent-hanamu-green" /> 緊張</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_fear" value="恐懼" class="accent-hanamu-green" /> 恐懼</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_anxiety" value="分離焦慮" class="accent-hanamu-green" /> 分離焦慮</label>
-            <label class="flex items-center gap-1 text-sm font-bold text-gray-700"><input type="checkbox" name="temperament_aggressive" value="具攻擊性" class="accent-hanamu-green" /> 具攻擊性</label>
-          </div>
-          <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
-            <span class="text-sm font-bold text-gray-500">其他：</span>
-            <input name="temperament_other" class="w-full cute-input px-3 py-2 text-sm" placeholder="其他個性描述" />
+        <div class="mt-3 space-y-3">
+          <div class="bg-white rounded-2xl border border-hanamu-wood/10 p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-sm font-bold text-gray-500 w-14 shrink-0">特質：</span>
+              <div class="flex flex-wrap items-center gap-2">
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_stable" value="個性穩定" class="w-4 h-4 accent-hanamu-green" /> 個性穩定
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_friendly" value="親人" class="w-4 h-4 accent-hanamu-green" /> 親人
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_dog_friendly" value="親狗" class="w-4 h-4 accent-hanamu-green" /> 親狗
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_nervous" value="緊張" class="w-4 h-4 accent-hanamu-green" /> 緊張
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_fear" value="恐懼" class="w-4 h-4 accent-hanamu-green" /> 恐懼
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_anxiety" value="分離焦慮" class="w-4 h-4 accent-hanamu-green" /> 分離焦慮
+                </label>
+                <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-hanamu-green/40 transition text-sm font-bold text-gray-700">
+                  <input type="checkbox" name="temperament_aggressive" value="具攻擊性" class="w-4 h-4 accent-hanamu-green" /> 具攻擊性
+                </label>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <span class="text-sm font-bold text-gray-500 w-14 shrink-0">其他：</span>
+              <input name="temperament_other" class="w-full cute-input px-3 py-2 text-sm" placeholder="其他個性描述" />
+            </div>
           </div>
         </div>
-              <!-- 不喜歡事項與其他說明 -->
-      <div class="md:col-span-3">
-        <label class="text-sm font-black text-hanamu-wood">不喜歡事項與其他說明</label>
-        <div class="text-[11px] font-bold text-gray-500 mt-1">如：剪指甲／清耳朵／沖水／吹風／分離焦慮等</div>
-        <textarea name="dislike_notes" class="mt-2 w-full cute-input px-4 py-3" rows="2" placeholder="請填寫不喜歡事項、外觀異常或其他補充說明..."></textarea>
-      </div>
-    </div>
+        <!-- 不喜歡事項與其他說明 -->
+        <div class="md:col-span-3 mt-4">
+          <label class="text-sm font-black text-hanamu-wood">不喜歡事項與其他說明</label>
+          <div class="text-[11px] font-bold text-gray-500 mt-1">如：剪指甲／清耳朵／沖水／吹風／分離焦慮等</div>
+          <textarea name="dislike_notes" class="mt-2 w-full cute-input px-4 py-3" rows="2" placeholder="請填寫不喜歡事項、外觀異常或其他補充說明..."></textarea>
+        </div>
       </div>
 
       <!-- 四、其他說明 -->
@@ -3171,7 +3237,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=9", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=10", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
