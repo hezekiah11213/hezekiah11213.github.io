@@ -1,0 +1,30 @@
+{
+  "name": "沐菓自然沐浴🌿寵物美容",
+  "short_name": "沐菓寵物美容",
+  "description": "沐菓自然沐浴寵物美容｜數位美容契約與預約服務",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#90A399",
+  "background_color": "#D6DED6",
+  "categories": ["lifestyle", "beauty", "pets"],
+  "lang": "zh-Hant-TW",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "沐菓自然沐浴寵物美容首頁"
+    }
+  ]
+}

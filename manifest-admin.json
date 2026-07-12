@@ -1,0 +1,18 @@
+{
+  "name": "沐菓自然沐浴🌿後台管理",
+  "short_name": "沐菓後台",
+  "description": "沐菓自然沐浴寵物美容｜後台管理系統",
+  "start_url": "/admin.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#D6DED6",
+  "background_color": "#D6DED6",
+  "icons": [
+    {
+      "src": "https://fkkayjsaadqmbslwpwzg.supabase.co/storage/v1/object/public/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

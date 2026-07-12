@@ -1,4 +1,6 @@
-const CACHE_NAME = 'muguo-pwa-cache-v1';
+// ✅ 版本號：更新此數字即可強制所有使用者重新快取
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = `muguo-pwa-cache-${CACHE_VERSION}`;
 
 // ✅ 核心靜態資源：這份 index.html 所使用到的所有外部 CDN、字體與圖標
 const ASSETS_TO_CACHE = [
