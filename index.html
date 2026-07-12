@@ -470,137 +470,21 @@ body{
 html{
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  position: relative;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
-  overflow-x: hidden !important;
-  overflow-y: auto;
-  width: 100% !important;
-  max-width: 100% !important;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  position: relative;
 }
 
-/* 確保所有容器都不會超出寬度 */
-* {
+/* 防止任何元素超出螢幕寬度 */
+input, select, textarea {
+  max-width: 100%;
   box-sizing: border-box;
-  max-width: 100% !important;
-}
-
-img, video, canvas, svg {
-  max-width: 100% !important;
-  height: auto;
-}
-
-input, select, textarea, button {
-  max-width: 100% !important;
-  box-sizing: border-box;
-}
-
-/* 強制所有容器和元素不溢出 */
-div, section, main, header, footer, article, aside, nav, form, fieldset, figure, table, tbody, tr, td, th {
-  max-width: 100% !important;
-  overflow-x: visible !important;
-}
-
-/* 防止表格和長內容溢出 */
-table {
-  table-layout: fixed;
-  width: 100% !important;
-}
-
-td, th {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* 防止 pre 和 code 溢出 */
-pre, code {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-width: 100% !important;
-}
-
-/* 隱藏水平滾動條 */
-::-webkit-scrollbar-horizontal {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-    /* 防止任何元素超出螢幕寬度 */
-input, select, textarea, button, a, div, section, main, header, footer {
-  max-width: 100% !important;
-  box-sizing: border-box;
-}
-
-/* 強制所有容器不溢出 */
-main, .max-w-3xl, .container, .glass-card, .cute-card {
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-}
-
-/* ✅ 強制頭部不溢出 */
-header {
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  left: 0 !important;
-  right: 0 !important;
-}
-
-/* ✅ 背景裝飾球不溢出 */
-.bg-blob {
-  max-width: 100% !important;
-  overflow: hidden !important;
-}
-
-/* 手機上特別加強 */
-@media (max-width: 768px) {
-  main {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-    overflow-x: hidden !important;
-  }
-  .max-w-3xl {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  header .max-w-3xl {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-  .glass-card, .cute-card {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-  /* ✅ 手機上強制所有卡片不溢出 */
-  .glass-card, .cute-card, .cute-input {
-    overflow-x: hidden !important;
-  }
-  /* ✅ 手機上防止任何元素超出 */
-  * {
-    max-width: 100% !important;
-  }
-  /* ✅ 手機上讓 grid 強制單欄 */
-  .grid {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-  }
-  .grid.md\:grid-cols-3 {
-    grid-template-columns: 1fr !important;
-  }
-  .grid.md\:grid-cols-2 {
-    grid-template-columns: 1fr !important;
-  }
-  .grid.grid-cols-2 {
-    grid-template-columns: 1fr 1fr !important;
-  }
 }
 
 /* iOS 輸入不放大 / 增加點擊舒適度 */
@@ -3353,7 +3237,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=12", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=11", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
