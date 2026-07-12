@@ -624,6 +624,13 @@ function renderRecords(){
     if(p.temperament_aggressive) temperamentLabels.push("攻擊性");
     const temperamentText = temperamentLabels.length > 0 ? temperamentLabels.join("、") : null;
     
+    // ✅ 檢查其他說明/不喜歡事項
+    const hasNotes = (p.dislike_notes && p.dislike_notes.trim()) || (p.health_other_notes && p.health_other_notes.trim());
+    const noteText = [];
+    if(p.dislike_notes && p.dislike_notes.trim()) noteText.push("不喜歡：" + p.dislike_notes.trim().slice(0, 12) + (p.dislike_notes.trim().length > 12 ? "…" : ""));
+    if(p.health_other_notes && p.health_other_notes.trim()) noteText.push("其他：" + p.health_other_notes.trim().slice(0, 12) + (p.health_other_notes.trim().length > 12 ? "…" : ""));
+    const noteDisplay = noteText.length > 0 ? noteText.join(" | ") : null;
+    
     const div=document.createElement("div");
     div.className="rounded-2xl border border-hanamu-green/15 bg-white p-4 shadow-soft cursor-pointer hover:border-hanamu-green/40 transition-all";
     
@@ -633,6 +640,9 @@ function renderRecords(){
     }
     if(temperamentText){
       tagsHtml += `<span class="inline-block text-[10px] font-black bg-hanamu-green/15 text-hanamu-wood px-2 py-0.5 rounded-full">💖 ${temperamentText}</span>`;
+    }
+    if(noteDisplay){
+      tagsHtml += `<span class="inline-block text-[10px] font-black bg-hanamu-accent/30 text-hanamu-wood px-2 py-0.5 rounded-full">📝 ${noteDisplay}</span>`;
     }
     
     div.innerHTML = `
@@ -719,12 +729,17 @@ function openCustomerModal(phone){
   container.innerHTML="";
   list.forEach(r=>{
     const p=r.payload||{};
+    
+    // ✅ 檢查是否有其他說明/不喜歡事項
+    const hasNotes = (p.dislike_notes && p.dislike_notes.trim()) || (p.health_other_notes && p.health_other_notes.trim());
+    
     const div=document.createElement("div");
     div.className="rounded-xl border border-hanamu-green/10 p-3 bg-white cursor-pointer hover:border-hanamu-green/40 transition";
     div.innerHTML = `
       <div class="font-black text-hanamu-dark">${p.pet_name||"-"}</div>
       <div class="text-xs text-hanamu-wood">${p.service_type||"-"}</div>
       <div class="text-[10px] text-hanamu-wood">${fmtTW(r.created_at).slice(0,10)}</div>
+      ${hasNotes ? `<div class="text-[10px] font-bold text-hanamu-red/80 mt-1">📝 有備註事項</div>` : ""}
     `;
     div.onclick=()=>{ closeCustomerModal(); openDetail(r.id); };
     container.appendChild(div);
@@ -1081,7 +1096,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/admin-sw.js?v=1", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/admin-sw.js?v=2", { scope: "/" });
 
       let refreshing = false;
       navigator.serviceWorker.addEventListener("controllerchange", () => {
