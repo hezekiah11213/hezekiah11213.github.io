@@ -472,19 +472,67 @@ html{
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
+  width: 100%;
+  position: relative;
 }
 
 body {
   overflow-x: hidden;
+  overflow-y: auto;
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
-/* 防止任何元素超出螢幕寬度 */
-input, select, textarea {
+/* 確保所有容器都不會超出寬度 */
+* {
+  box-sizing: border-box;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+input, select, textarea, button {
   max-width: 100%;
   box-sizing: border-box;
+}
+
+    /* 防止任何元素超出螢幕寬度 */
+input, select, textarea, button, a, div, section, main, header, footer {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 強制所有容器不溢出 */
+main, .max-w-3xl, .container, .glass-card, .cute-card {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 手機上特別加強 */
+@media (max-width: 768px) {
+  main {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow-x: hidden !important;
+  }
+  .max-w-3xl {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  header .max-w-3xl {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .glass-card, .cute-card {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 }
 
 /* iOS 輸入不放大 / 增加點擊舒適度 */
@@ -3237,7 +3285,7 @@ location.hash = "#success";
 
   window.addEventListener("load", async () => {
     try {
-      const reg = await navigator.serviceWorker.register("/sw.js?v=10", { scope: "/" });
+      const reg = await navigator.serviceWorker.register("/sw.js?v=11", { scope: "/" });
 
       // 只要 SW 控制權換人（新 SW 啟用），就重新整理到新版本
       let refreshing = false;
